@@ -1,4 +1,4 @@
-name := """play-scala-seed"""
+name := """cos371-scalaapi"""
 organization := "dev.bangasser"
 
 version := "1.0-SNAPSHOT"
