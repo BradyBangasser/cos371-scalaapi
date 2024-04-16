@@ -1,4 +1,4 @@
-const wsLocation = "ws://localhost:9000/ws"
+const wsLocation = "ws://192.168.0.11:9000/ws"
 
 let sock = new WebSocket(wsLocation)
 
@@ -6,6 +6,18 @@ let closed = true;
 
 function reconnectSock() {
     sock = new WebSocket(wsLocation)
+
+    sock.onopen = (event) => {
+        closed = false;
+    }
+
+    sock.onmessage = (event) => {
+        messages.innerHTML += `<h3>${event.data}</h3>\n`
+    }
+
+    sock.onclose = (event) => {
+        closed = true;
+    }
 }
 
 const messages = document.getElementById("messages")
@@ -17,16 +29,4 @@ form.onsubmit = (event) => {
     sock.send(event.target.message.value)
 }
 
-sock.onopen = (event) => {
-    closed = false;
-    sock.send("Connection opened")
-}
-
-sock.onmessage = (event) => {
-    console.log(event, messages)
-    messages.innerHTML += `<h3>${event.data}</h3>\n`
-}
-
-sock.onclose = (event) => {
-    closed = true;
-}
+reconnectSock()
