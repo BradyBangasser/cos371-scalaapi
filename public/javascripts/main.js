@@ -12,7 +12,7 @@ function reconnectSock() {
     }
 
     sock.onmessage = (event) => {
-        messages.innerHTML += `<h3>${event.data}</h3>\n`
+        messages.innerText += `${event.data}\n`
     }
 
     sock.onclose = (event) => {
