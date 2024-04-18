@@ -7,10 +7,12 @@ import org.apache.pekko.stream.Materializer
 import play.api.libs.streams.ActorFlow
 import play.api.mvc._
 import java.util.ArrayList
+import actors.RoomDirector
+import org.apache.pekko.actor.ActorContext
 
 class ChatController @Inject() (cc: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
-  val chatSock = system.actorOf(actors.ChatroomManager.props, "he")
+  var roomDirector: RoomDirector = new RoomDirector(system)
   def chatSocketConnection(id: String) = WebSocket.accept[String, String] { request =>
-    ActorFlow.actorRef { out => actors.ClientActor.props(system, out, chatSock) }
+    ActorFlow.actorRef { out => actors.ClientActor.props(system, out, roomDirector.getRoomActor(id)) }
   }
 }

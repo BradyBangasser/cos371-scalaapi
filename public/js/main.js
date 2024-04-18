@@ -1,4 +1,4 @@
-const wsLocation = "ws://192.168.0.11:9000/ws"
+const wsLocation = "ws://localhost:9000/ws/h"
 
 let sock = new WebSocket(wsLocation)
 

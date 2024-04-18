@@ -1,13 +1,11 @@
 @()
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
-  <div>
-    <h2>Messages</h2>
-    <div id="messages"></div>
-  </div>
-  <form id="form">
-    <input name="message" id="message" type="text" />
+@main("Chat - Login") {
+  <form id="login">
+    <input id="chatId" name="chatId" placeholder="Chat Id" />
+    <input id="username" name="username" placeholder="Username" />
     <input type="submit" />
   </form>
+
+  <script src="@routes.Assets.versioned("js/login.js")" ref="application/javascript"></script>
 }
