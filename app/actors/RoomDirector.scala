@@ -3,13 +3,17 @@ package actors;
 import org.apache.pekko.actor._
 import scala.collection.mutable.Map
 
-type bool = Boolean
-
 // I wrote this file using whitespace scala instead of the curly bracket syntax that I prefer
 
 object RoomDirector:
     def apply(system: ActorSystem): RoomDirector = new RoomDirector(system)
 
+/**
+  * This will manage all of the ChatroomDirectors
+  *
+  * @note This system is a standard scala class rather than a actor
+  * @param system The Actor System that it runs on
+  */
 class RoomDirector(system: ActorSystem):
     private var rooms = Map[String, ActorRef]()
 

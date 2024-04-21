@@ -22,6 +22,11 @@ public class UserMessage {
     public String getUsername() { return username; }
     public String getMsg() { return msg; }
     public Date getTimeStamp() { return timestamp; }
+
+    // I didn't want to use spray for this because it's more work than just writing this out
+    public String toJson() {
+        return String.format("{\"username\":\"%s\",\"message\":\"%s\",\"timestamp\":%d}", username, msg, timestamp.getTime());
+    }
 }
 
 /*

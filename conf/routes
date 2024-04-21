@@ -5,10 +5,11 @@
 
 # An example controller showing a sample home page
 GET     /                                          controllers.HomeController.index()
+GET     /chat                                      controllers.HomeController.chat()
 
 GET     /api/ping                                  controllers.PingController.GET()
-GET     /api/room/:room/:username/subscribe        controllers.LoginController.GET(room, username)
-GET     /ws/:id                                    controllers.ChatController.chatSocketConnection(id)
+GET     /api/room/:room/login                      controllers.LoginController.GET(room, username)
+GET     /api/room/:room/ws                         controllers.ChatController.chatSocketConnection(room)
 GET     /test                                      controllers.TestController.GET()
 
 # Map static resources from the /public folder to the /assets URL path
