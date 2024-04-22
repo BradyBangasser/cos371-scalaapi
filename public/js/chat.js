@@ -4,7 +4,6 @@ const chat = query.get("id")
 
 if (!accessToken | !chat) {
     document.location.assign("/")
-    alert("here")
 }
 
 const messagesDiv = document.getElementById("messages")
