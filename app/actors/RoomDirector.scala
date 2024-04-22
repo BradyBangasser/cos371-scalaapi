@@ -26,7 +26,7 @@ class RoomDirector(system: ActorSystem):
         var room = rooms.get(name)
         if (room.isDefined) return room
         else
-            room = Some(system.actorOf(ChatroomManager.props(this, name)))
+            room = Some(system.actorOf(ChatroomDirectorActor.props(this, name)))
             rooms.put(name, room.get)
             return room
     

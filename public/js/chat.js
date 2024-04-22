@@ -1,9 +1,10 @@
 const accessToken = localStorage.getItem("accessToken")
 const query = new URLSearchParams(window.location.search)
-const chat = query.get("chat")
+const chat = query.get("id")
 
 if (!accessToken | !chat) {
-    window.location.href = "/login"
+    document.location.assign("/")
+    alert("here")
 }
 
 const messagesDiv = document.getElementById("messages")
@@ -12,7 +13,7 @@ const messageForm = document.getElementById("messageForm")
 let connected = false;
 
 function establishSock() {
-    let chatSock = new WebSocket(`/api/room/${chat}/ws}`)
+    let chatSock = new WebSocket(`ws://localhost:9000/api/room/${chat}/ws?token=${accessToken}`)
     
     chatSock.onopen = () => {
         setConnected(true)
@@ -24,11 +25,28 @@ function establishSock() {
 
     chatSock.onmessage = (event) => {
         const messageData = JSON.parse(event.data)
-        messagesDiv.innerText += `${new Date(messageData.timestamp).toLocaleDateString()} ${messageData.username}: ${messageData.message}\n`
+        const now = new Date()
+        messagesDiv.innerText += `[${now.toLocaleDateString()} ${now.toLocaleTimeString()}] ${messageData.username}: ${messageData.message}\n`
+    }
+
+    chatSock.onerror = (event) => {
+        console.log(event)
+        throw event
     }
 
     messageForm.onsubmit = (event) => {
+        event.preventDefault()
         chatSock.send(event.target.message.value)
+        event.target.message.value = ""
+    }
+}
+
+const logoutButton = document.getElementById("logout")
+
+if (logoutButton) {
+    logoutButton.onclick = (event) => {
+        localStorage.clear()
+        window.location.href = "/"
     }
 }
 
@@ -43,3 +61,5 @@ function setConnected(connected) {
         connected = false
     }
 }
+
+establishSock()

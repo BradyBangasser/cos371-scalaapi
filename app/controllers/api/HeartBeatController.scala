@@ -1,4 +1,4 @@
-@Singleton
-class HeartBeatController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+// @Singleton()
+// class HeartBeatController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
     
-}
+// }

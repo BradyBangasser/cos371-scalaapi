@@ -51,9 +51,10 @@ object JWT {
 
         val headerJson = String(decoders.decode(sections(0))).parseJson.convertTo[Map[String, JsType]]
 
+
         val exptime = headerJson.get("exp")
 
-        if (!exptime.isDefined || new Date().getTime() - exptime.get.convertTo[Int] >= 0) {
+        if (!exptime.isDefined || new Date().getTime() - exptime.get.convertTo[Long] >= 0) {
             return None
         }
 
@@ -76,7 +77,4 @@ class JWT(header: Map[String, JsType], body: Map[String, JsType]) {
         val strVal = encoder.encodeToString(header.toJson.toString.getBytes()) + "." + Base64.getUrlEncoder().encodeToString(body.toJson.toString.getBytes())
         strVal + "." + encoder.encodeToString(JWT.getHMACAlgorithm.doFinal(strVal.getBytes()))
     }
-
-    def getHeader = header
-    def getBody = body
 }

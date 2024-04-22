@@ -9,8 +9,7 @@ GET     /chat                                      controllers.HomeController.ch
 
 GET     /api/ping                                  controllers.PingController.GET()
 GET     /api/room/:room/login                      controllers.LoginController.GET(room, username)
-GET     /api/room/:room/ws                         controllers.ChatController.chatSocketConnection(room)
-GET     /test                                      controllers.TestController.GET()
+GET     /api/room/:room/ws                         controllers.ChatController.chatSocketConnection(room, token)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                              controllers.Assets.versioned(path="/public", file: Asset)

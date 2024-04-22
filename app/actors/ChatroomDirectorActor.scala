@@ -7,7 +7,7 @@ import java.util.ArrayList
   * Static methods for @ref ChatroomManager
   */
 object ChatroomDirectorActor {
-    def props(roomDirector: RoomDirector, roomname: String) = Props(new ChatroomManager(roomDirector, roomname))
+    def props(roomDirector: RoomDirector, roomname: String) = Props(new ChatroomDirectorActor(roomDirector, roomname))
 }
 
 /**

@@ -2,6 +2,7 @@ package actors
 
 import org.apache.pekko.actor._
 import java.util.Date
+import spray.json.DefaultJsonProtocol._
 
 type bool = Boolean
 
@@ -18,12 +19,13 @@ object ClientActor {
   * @param token The JWT provided by the client
   */
 class ClientActor(sys: ActorSystem, out: ActorRef, chat: ActorRef, token: auth.JWT) extends Actor {
-  chat ! models.SessionAccess(self, token.body("username"))
+  val username = token.getBody("username").convertTo[String]
+  chat ! models.SessionAccess(self, username)
   override def receive = {
     // We don't need to worry about checking the token here because it is checked when the session is established
     // however this will not enforce token expiration if they are connected when the token expires
     case msg: String => {
-      chat.forward(new models.UserMessage(token.body("username"), msg))
+      chat.forward(new models.UserMessage(username, msg))
     }
 
     /**
